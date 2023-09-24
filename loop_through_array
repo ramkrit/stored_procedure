@@ -1,0 +1,17 @@
+PROCEDURE db.loop_through_array()
+
+BEGIN
+  DECLARE ids varchar(150) DEFAULT '1,2,3,4';
+  DECLARE element varchar(150);
+
+  WHILE ids != '' DO
+    SET element = SUBSTRING_INDEX(ids, ',', 1);      
+    UPDATE admin SET test_column=element WHERE id=element;
+    
+    IF LOCATE(',', ids) > 0 THEN
+      SET ids = SUBSTRING(ids, LOCATE(',', ids) + 1);
+    ELSE
+      SET ids = '';
+    END IF;
+  END WHILE;
+END
